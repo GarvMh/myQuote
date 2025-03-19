@@ -1,0 +1,31 @@
+<!-- app/views/quotes/new.html.erb -->
+<!-- 
+  This view provides a form for creating a new quote. 
+  It displays any validation errors and renders the quote form partial for user input.
+-->
+
+<h1>New Quote</h1> <!-- Page heading -->
+
+<!-- Display validation errors if any exist -->
+<% if @quote.errors.any? %>
+  <div class="alert alert-danger">
+    <h4>
+      <%= pluralize(@quote.errors.count, "error") %> prevented this quote from being saved:
+    </h4>
+    <ul>
+      <% @quote.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li> <!-- Display each validation error message -->
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<!-- Render the quote form partial, passing a new quote instance -->
+<%= render 'form', quote: @quote %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation link to return to the list of quotes -->
+<div>
+  <%= link_to "Back to quotes", quotes_path %>
+</div>

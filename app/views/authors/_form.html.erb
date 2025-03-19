@@ -1,0 +1,59 @@
+<!-- app/views/authors/_form.html.erb -->
+<!-- 
+  This partial renders a form for creating or editing an author.
+  It is used in both the new and edit views to maintain consistency.
+-->
+
+<%= form_with(model: author) do |form| %>
+  
+  <!-- Display validation errors if any exist -->
+  <% if author.errors.any? %>
+    <div style="color: red">
+      <h2>
+        <%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:
+      </h2>
+
+      <ul>
+        <% author.errors.each do |error| %>
+          <li><%= error.full_message %></li> <!-- Display each validation error message -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Author's First Name Field -->
+  <div>
+    <%= form.label :authorFirstName, style: "display: block" %>
+    <%= form.text_field :authorFirstName %>
+  </div>
+
+  <!-- Author's Surname Field -->
+  <div>
+    <%= form.label :authorSurname, style: "display: block" %>
+    <%= form.text_field :authorSurname %>
+  </div>
+
+  <!-- Author's Description/Biography Field -->
+  <div>
+    <%= form.label :authorDescription, style: "display: block" %>
+    <%= form.text_area :authorDescription %>
+  </div>
+
+  <!-- Author's Birth Year Field -->
+  <div>
+    <%= form.label :birthYear, style: "display: block" %>
+    <%= form.text_field :birthYear %>
+  </div>
+
+  <!-- Author's Death Year Field -->
+  <div>
+    <%= form.label :deathYear, style: "display: block" %>
+    <%= form.text_field :deathYear %>
+  </div>
+
+  <!-- Submit Button to Save the Author -->
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

@@ -1,0 +1,22 @@
+<!-- app/views/quote_categories/_quote_category.html.erb -->
+<!-- 
+  This partial renders the details of a single QuoteCategory association.
+  It displays the quote ID and category ID linked by this association.
+-->
+
+<!-- Wrapper div with a dynamic ID based on the quote_category's ID -->
+<div id="<%= dom_id quote_category %>">
+  
+  <!-- Display the ID of the associated quote -->
+  <p>
+    <strong>Quote:</strong>
+    <%= quote_category.quote_id %>
+  </p>
+
+  <!-- Display the ID of the associated category -->
+  <p>
+    <strong>Category:</strong>
+    <%= quote_category.category_id %>
+  </p>
+
+</div>

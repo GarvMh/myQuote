@@ -1,0 +1,97 @@
+# We are now going to search for quotes that do NOT belong to a specific category.
+excluded_category_name = "Ethics"
+
+# Retrieve all quotes that do not belong to the specified category, including associated authors, categories, and users.
+quotes_without_category = Quote.joins(:categories).where.not(id: 
+  Quote.joins(:categories).where(categories: { categoryName: excluded_category_name })
+).distinct.includes(:author, :categories, :user)
+
+# Count how many quotes are found that do not belong to the excluded category.
+quotes_without_category_count = quotes_without_category.count
+
+# Output the number of quotes found that do not belong to the excluded category.
+puts "There were #{quotes_without_category_count} quotes found that do not belong to the category '#{excluded_category_name}':"
+
+if quotes_without_category_count > 1
+  # If there are multiple quotes, loop through each one and display the details.
+  quotes_without_category.each do |quote|
+    puts "QUOTE DESCRIPTION:"
+    puts "#{quote.quoteDescription}"
+    
+    puts "AUTHOR:"
+    puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+    
+    # Only show birth year and death year if they exist
+    puts "BORN: #{quote.author.birthYear}" if quote.author.birthYear
+    puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+
+    # Only display the biography if available
+    puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+
+    puts "POSTED BY USER:"
+    puts "#{quote.user.userFirstName}"
+
+    puts "CATEGORIES:"
+    cnt = 1
+    quote.categories.each do |category|
+      puts "#{cnt}. #{category.categoryName}"
+      cnt += 1
+    end
+    cnt = 1
+
+    # Display publication year if available
+    if quote.publicationYear
+      puts "PUBLICATION YEAR:"
+      puts "#{quote.publicationYear}"
+    end
+
+    # Display the comment if available
+    if quote.comment
+      puts "COMMENT:"
+      puts "#{quote.comment}"
+    end
+
+    # Print a separator for the next quote.
+    puts "<next quote>"
+  end
+else
+  # If there is only one quote, display its information directly.
+  quote = quotes_without_category.first
+
+  puts "QUOTE DESCRIPTION:"
+  puts "#{quote.quoteDescription}"
+  
+  puts "AUTHOR:"
+  puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+  
+  # Show birth and death years if available
+  puts "BORN: #{quote.author.birthYear}" if quote.author.birthYear
+  puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+  puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+
+  puts "POSTED BY USER:"
+  puts "#{quote.user.userFirstName}"
+
+  puts "CATEGORIES:"
+  cnt = 1
+  quote.categories.each do |category|
+    puts "#{cnt}. #{category.categoryName}"
+    cnt += 1
+  end
+  cnt = 1
+
+  # Display publication year if available
+  if quote.publicationYear
+    puts "PUBLICATION YEAR:"
+    puts "#{quote.publicationYear}"
+  end
+
+  # Show comment if available
+  if quote.comment
+    puts "COMMENT:"
+    puts "#{quote.comment}"
+  end
+end
+
+# Suppress the result being displayed by returning nil
+nil

@@ -1,0 +1,26 @@
+<!-- app/views/quotes/edit.html.erb -->
+<!-- 
+  This view allows users to edit an existing quote. 
+  It displays a heading that varies based on the user's role 
+  (either the original poster or an administrator) and 
+  renders a form for editing the quote.
+-->
+
+<h1>
+  <% if current_user == @quote.user %>
+    Edit Your Quote <!-- Heading for the user editing their own quote -->
+  <% elsif is_administrator? %>
+    Edit Quote (Admin Access) <!-- Heading for an administrator editing any quote -->
+  <% end %>
+</h1>
+
+<!-- Render the form for editing the quote, passing the current quote instance -->
+<%= render "form", quote: @quote %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation Links for showing the current quote or returning to the list -->
+<div>
+  <%= link_to "Show this quote", @quote %> | <!-- Link to view the current quote -->
+  <%= link_to "Back to quotes", quotes_path %> <!-- Link to return to the list of quotes -->
+</div>

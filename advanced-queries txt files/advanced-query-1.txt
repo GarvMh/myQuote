@@ -1,0 +1,52 @@
+# We're going to retrieve all the quotes, along with the authors, categories, and users who posted them.
+quotes = Quote.includes(:author, :categories, :user)
+
+# Now let's loop through each quote and output its details in a structured format.
+quotes.each do |quote|
+  puts "QUOTE DESCRIPTION:"
+  # Display the actual text of the quote
+  puts "#{quote.quoteDescription}"
+  
+  puts "AUTHOR:"
+  # Show the author's full name
+  puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+  
+  # If the author has a birth year, we'll show it here.
+  puts "BORN: #{quote.author.birthYear}"
+  
+  # Same for the death year, but only if it's available.
+  puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+  
+  # Let's include a brief biography of the author, but only if there's one.
+  puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+  
+  puts "POSTED BY USER:"
+  # We show who posted the quote
+  puts "#{quote.user.userFirstName}"
+  
+  puts "CATEGORIES:"
+  # Now we list all the categories the quote belongs to.
+  cnt = 1  # Initialize a counter for the categories
+  quote.categories.each do |category|
+    puts "#{cnt}. #{category.categoryName}"  # Display the category name
+    cnt += 1  # Increment the counter for the next category
+  end
+  
+  # Reset the counter (if needed in further code)
+  cnt = 1
+  
+  # If there's a publication year, we'll show it here.
+  if quote.publicationYear
+    puts "PUBLICATION YEAR:"
+    puts "#{quote.publicationYear}"
+  end
+  
+  # Finally, if the user added a comment about the quote, let's display it.
+  if quote.comment
+    puts "COMMENT:"
+    puts "#{quote.comment}"
+  end
+  
+  # Print a separator for the next quote in the list.
+  puts "<next quote>"
+end

@@ -1,0 +1,85 @@
+<!-- 
+  This partial renders the navigation bar for the application. 
+  It includes links to different sections and conditionally displays user-specific 
+  options based on whether the user is logged in and their role (admin or standard user).
+-->
+
+<nav class="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <!-- Toggle button for responsive design -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content that collapses on smaller screens -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+        <!-- Link to the home page -->
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class:"nav-link" %>
+        </li>
+
+        <!-- Link to the search page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">Search</a>
+        </li>
+
+        <!-- Link to the about page -->
+        <li class="nav-item">
+          <%= link_to "About", about_path, class:"nav-link" %>
+        </li>
+
+        <!-- Display Sign Up link if the user is not logged in -->
+        <% if !logged_in? %>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', new_user_path, class:"nav-link" %>
+          </li>
+        <% end %>
+
+        <!-- Display Sign In link if the user is not logged in -->
+        <% if !logged_in? %>
+          <li class="nav-item">
+            <%= link_to 'Sign In', login_path, class:"nav-link" %>
+          </li>
+        <% end %>
+
+        <!-- Display Sign Out button if the user is logged in -->
+        <% if logged_in? %>
+          <li class="nav-item">
+            <%= button_to "Sign Out", logout_path, method: :delete, class: "btn btn-link nav-link", data: { turbo: false, confirm: "Are you sure you want to log out?" } %>
+          </li>
+        <% end %>
+
+        <!-- User dropdown menu for standard users -->
+        <% if logged_in? && !is_administrator? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              User
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "My Account", userhome_path, class:"dropdown-item" %></li>
+              <li><%= link_to "My Quotes", your_quotes_path, class:"dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to 'Add New Quote', new_quote_path, class:"dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+
+        <!-- Admin dropdown menu for administrators -->
+        <% if logged_in? && is_administrator? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Admin
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Admin Home", admin_path, class:"dropdown-item" %></li>
+              <li><%= link_to 'Manage Users', users_path, class:"dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+</nav>

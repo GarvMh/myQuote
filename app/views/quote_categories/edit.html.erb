@@ -1,0 +1,18 @@
+<!-- app/views/quote_categories/edit.html.erb -->
+<!-- 
+  This view renders a form for editing an existing QuoteCategory association.
+  It reuses the shared '_form' partial to maintain consistency between the new and edit views.
+-->
+
+<h1>Editing quote category</h1> <!-- Page heading -->
+
+<!-- Render the reusable form partial, passing the current QuoteCategory instance -->
+<%= render "form", quote_category: @quote_category %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation links to show the current quote category or return to the index page -->
+<div>
+  <%= link_to "Show this quote category", @quote_category %> | <!-- View the current quote category -->
+  <%= link_to "Back to quote categories", quote_categories_path %> <!-- Return to the quote categories list -->
+</div>

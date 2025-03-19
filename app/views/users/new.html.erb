@@ -1,0 +1,18 @@
+<!-- app/views/users/new.html.erb -->
+<!-- 
+  This view provides a form for creating a new user. 
+  It renders the user form partial for input and includes a navigation link 
+  to return to the user list.
+-->
+
+<h1>New User</h1> <!-- Page heading for creating a new user -->
+
+<!-- Render the user form partial, passing a new user instance -->
+<%= render "form", user: @user %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation link to return to the list of users -->
+<div>
+  <%= link_to "Back to users", users_path %>
+</div>

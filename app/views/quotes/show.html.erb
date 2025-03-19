@@ -1,0 +1,41 @@
+<!-- app/views/quotes/show.html.erb -->
+<!-- 
+  This view displays the details of a specific quote. 
+  It includes information about the quote itself, its categories, 
+  the author, and any comments, along with a link to navigate back to the home page.
+-->
+
+<h1>Quote Details</h1> <!-- Page heading for quote details -->
+
+<!-- Display Quote Information -->
+<p><strong>Quote:</strong> <%= @quote.quoteDescription %></p>
+
+<!-- Display Categories -->
+<% if @categories.any? %>
+  <p><strong>Categories:</strong> 
+    <%= @categories.map(&:categoryName).join(', ') %> <!-- Join category names with commas -->
+  </p>
+<% end %>
+
+<!-- Display Author Information -->
+<% if @author.present? %>
+  <p><strong>Author:</strong> <%= @author.authorFirstName %> <%= @author.authorSurname %></p>
+  <p><strong>Birth Year:</strong> <%= @author.birthYear %></p>
+  <% if @author.deathYear.present? %>
+    <p><strong>Death Year:</strong> <%= @author.deathYear %></p> <!-- Display death year if available -->
+  <% end %>
+  <p><strong>Biography:</strong> <%= @author.authorDescription || 'N/A' %></p> <!-- Display biography or 'N/A' if not available -->
+<% end %>
+
+<!-- Publication Year -->
+<% if @quote.publicationYear.present? %>
+  <p><strong>Publication Year:</strong> <%= @quote.publicationYear %></p> <!-- Display publication year if available -->
+<% end %>
+
+<!-- Comment -->
+<% if @quote.comment.present? %>
+  <p><strong>Comment:</strong> <%= @quote.comment %></p> <!-- Display the quote's comment if available -->
+<% end %>
+
+<!-- Back Link to Home -->
+<%= link_to 'Back to Home', root_path, class: 'btn btn-secondary' %> <!-- Link to navigate back to the home page -->

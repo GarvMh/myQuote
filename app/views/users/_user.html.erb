@@ -1,0 +1,47 @@
+<!-- app/views/users/_user.html.erb -->
+<!-- 
+  This partial renders the details of a single User. 
+  It displays various attributes of the user, including their first name, surname, email address,
+  current password status, admin status, and account status.
+-->
+
+<!-- Wrapper div with a dynamic ID based on the user's ID -->
+<div id="<%= dom_id user %>">
+  
+  <!-- Display the user's first name -->
+  <p>
+    <strong>User First Name:</strong>
+    <%= user.userFirstName %>
+  </p>
+
+  <!-- Display the user's surname -->
+  <p>
+    <strong>User Surname:</strong>
+    <%= user.userSurname %>
+  </p>
+
+  <!-- Display the user's email address -->
+  <p>
+    <strong>Email Address:</strong>
+    <%= user.emailAddress %>
+  </p>
+
+  <!-- Display current password status (encrypted) -->
+  <p>
+    <strong>Current Password: </strong><span class="text-danger">ENCRYPTED</span>
+    <!-- Uncomment the line below to display the password digest (not recommended for security reasons) -->
+    <%# user.password_digest %>  
+  </p>
+
+  <!-- Display whether the user has admin privileges -->
+  <p>
+    <strong>Is Admin:</strong>
+    <%= user.isAdmin %>
+  </p>
+
+  <!-- Display the user's account status -->
+  <p>
+    <strong>Account Status:</strong>
+    <%= user.accountStatus %>
+  </p>
+</div>

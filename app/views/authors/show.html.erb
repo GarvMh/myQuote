@@ -1,0 +1,21 @@
+<!-- app/views/authors/show.html.erb -->
+<!-- 
+  This view displays the details of a specific author. 
+  It uses the '_author' partial to render the author's information and provides 
+  links for editing, returning to the author list, and deleting the author.
+-->
+
+<!-- Display a notice message, if any, in green -->
+<p style="color: green"><%= notice %></p>
+
+<!-- Render the '_author' partial to show the author's details -->
+<%= render @author %>
+
+<!-- Action links: Edit, Back to List, and Delete Author -->
+<div>
+  <%= link_to "Edit this author", edit_author_path(@author) %> | 
+  <%= link_to "Back to authors", authors_path %>
+
+  <!-- Button to delete the author, using the DELETE HTTP method -->
+  <%= button_to "Destroy this author", author_path(@author), method: :delete %>
+</div>

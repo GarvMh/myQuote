@@ -1,0 +1,24 @@
+
+<!-- 
+  This view displays a list of quotes associated with the current user. 
+  Each quote is shown in a styled card format, with the user's name and a link to read the full quote.
+-->
+
+<h3>Your Quotes</h3> <!-- Section heading for the user's quotes -->
+<hr /> <!-- Horizontal line for separation -->
+
+<!-- Iterate over the user's quotes and display each one in a card -->
+<% @quotes.each do |quote| %>
+  <div class="card bg-body-tertiary" style="margin-bottom:10px">
+    <div class="card-body">
+      <!-- Display the first name of the user who posted the quote -->
+      <h4 class="card-title">Posted by: <%= quote.user.userFirstName %></h4>
+      
+      <!-- Display the quote description and a link to read the full quote -->
+      <p class="card-text">
+        <%= quote.quoteDescription %><br />
+        [<a href="/quotes/<%= quote.id %>">Read full quote</a>]
+      </p>
+    </div>
+  </div>
+<% end %>

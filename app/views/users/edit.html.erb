@@ -1,0 +1,24 @@
+<!-- app/views/users/edit.html.erb -->
+<!-- 
+  This view allows administrators and users to update their details. 
+  It renders the form partial for editing the user's information and 
+  provides links to navigate based on the user's role.
+-->
+
+<h1>Update User Details</h1> <!-- Page heading -->
+
+<!-- Render the form partial for editing the user, passing the current user instance -->
+<%= render 'form', user: @user %>
+
+<!-- Admin and User-specific Links -->
+<% if current_user.isAdmin? %>
+  <div style="padding-top: 20px;">
+    <%= link_to "Show this user", @user, class: "btn btn-secondary" %> <!-- Link to view the current user's details -->
+    |
+    <%= link_to "Back to All Users", users_path, class: "btn btn-secondary" %> <!-- Link to return to the list of all users -->
+  </div>
+<% else %>
+  <div style="padding-top: 20px;">
+    <%= link_to "Back to Dashboard", userhome_path, class: "btn btn-secondary" %> <!-- Link to return to the user dashboard -->
+  </div>
+<% end %>

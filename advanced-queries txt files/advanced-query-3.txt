@@ -1,0 +1,95 @@
+# We are now going to search for quotes that contain a specific string in the quote description.
+search_term = "work"
+
+# Retrieve all quotes where the description contains the search term, including associated authors, categories, and users.
+quotes_with_term = Quote.includes(:author, :categories, :user).where("quoteDescription LIKE ?", "%#{search_term}%")
+
+# Count the number of quotes found.
+quotes_with_term_count = quotes_with_term.count
+
+# If there are multiple quotes found, we'll loop through and display each one.
+if quotes_with_term_count > 1
+  quotes_with_term.each do |quote|
+    puts "QUOTE DESCRIPTION:"
+    # Display the actual text of the quote.
+    puts "#{quote.quoteDescription}"
+    
+    puts "AUTHOR:"
+    # Show the author's full name.
+    puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+    
+    # Display the author's birth year, if available.
+    puts "BORN: #{quote.author.birthYear}"
+    
+    # Display the author's death year, only if applicable.
+    puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+    
+    # Display a brief biography of the author, only if provided.
+    puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+    
+    puts "POSTED BY USER:"
+    # Show the first name of the user who posted the quote.
+    puts "#{quote.user.userFirstName}"
+    
+    puts "CATEGORIES:"
+    # Initialize a counter to list the categories.
+    cnt = 1
+    # Loop through and display each category the quote belongs to.
+    quote.categories.each do |category|
+      puts "#{cnt}. #{category.categoryName}"  # Display the category name.
+      cnt += 1  # Increment the counter for the next category.
+    end
+    
+    # Reset the counter for future use (if needed).
+    cnt = 1
+    
+    # If a publication year exists for the quote, display it.
+    if quote.publicationYear
+      puts "PUBLICATION YEAR:"
+      puts "#{quote.publicationYear}"
+    end
+    
+    # If the user has added a comment about the quote, display it.
+    if quote.comment
+      puts "COMMENT:"
+      puts "#{quote.comment}"
+    end
+    
+    # Print a separator for the next quote.
+    puts "<next quote>"
+  end
+else
+  # If there's only one quote found, we display it directly.
+  quote = quotes_with_term.first
+  
+  puts "QUOTE DESCRIPTION:"
+  puts "#{quote.quoteDescription}"
+  
+  puts "AUTHOR:"
+  puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+  
+  puts "BORN: #{quote.author.birthYear}"
+  puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+  puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+  
+  puts "POSTED BY USER:"
+  puts "#{quote.user.userFirstName}"
+  
+  puts "CATEGORIES:"
+  cnt = 1
+  quote.categories.each do |category|
+    puts "#{cnt}. #{category.categoryName}"
+    cnt += 1
+  end
+  cnt = 1
+  
+  if quote.publicationYear
+    puts "PUBLICATION YEAR:"
+    puts "#{quote.publicationYear}"
+  end
+  
+  if quote.comment
+    puts "COMMENT:"
+    puts "#{quote.comment}"
+  end
+end

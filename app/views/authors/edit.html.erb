@@ -1,0 +1,18 @@
+<!-- app/views/authors/edit.html.erb -->
+<!-- 
+  This view renders the form for editing an existing author.
+  It reuses the shared '_form' partial to maintain consistency across the new and edit views.
+-->
+
+<h1>Editing author</h1> <!-- Page heading -->
+
+<!-- Render the reusable form partial, passing the current author instance -->
+<%= render "form", author: @author %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation links for viewing the author details and returning to the author index -->
+<div>
+  <%= link_to "Show this author", author_path(author) %> | <!-- Link to view the author -->
+  <%= link_to "Back to authors", authors_path %> <!-- Link to go back to the list of authors -->
+</div>

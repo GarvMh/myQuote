@@ -1,0 +1,47 @@
+<!-- app/views/quotes/_quote.html.erb -->
+<!-- 
+  This partial renders the details of a single Quote. 
+  It displays various attributes of the quote, including its visibility status, description, comment, 
+  publication year, user ID, and author ID.
+-->
+
+<!-- Wrapper div with a dynamic ID based on the quote's ID -->
+<div id="<%= dom_id quote %>">
+  
+  <!-- Display whether the quote is private -->
+  <p>
+    <strong>Is private:</strong>
+    <%= quote.isPrivate %>
+  </p>
+
+  <!-- Display the description of the quote -->
+  <p>
+    <strong>Quote description:</strong>
+    <%= quote.quoteDescription %>
+  </p>
+
+  <!-- Display any comments associated with the quote -->
+  <p>
+    <strong>Comment:</strong>
+    <%= quote.comment %>
+  </p>
+
+  <!-- Display the publication year of the quote -->
+  <p>
+    <strong>Publication year:</strong>
+    <%= quote.publicationYear %>
+  </p>
+
+  <!-- Display the ID of the user who posted the quote -->
+  <p>
+    <strong>User:</strong>
+    <%= quote.user_id %>
+  </p>
+
+  <!-- Display the ID of the author of the quote -->
+  <p>
+    <strong>Author:</strong>
+    <%= quote.author_id %>
+  </p>
+
+</div>

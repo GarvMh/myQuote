@@ -1,0 +1,30 @@
+<!-- app/views/sessions/new.html.erb -->
+<!-- 
+  This view provides the login form for users to sign in to their accounts.
+  It displays any error messages related to the login process.
+-->
+
+<!-- Display an error message if there is a flash error set -->
+<% if flash[:error] %>
+  <p class="error" style="color:red;"><%= flash[:error] %></p>
+<% end %>
+
+<h2>Sign in</h2> <!-- Heading for the sign-in form -->
+
+<!-- Form for logging in, submitting to the login_path -->
+<%= form_tag login_path, method: :post do %>
+  <!-- Email address input field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= email_field_tag :emailAddress, nil, required: true, placeholder: 'Email Address', class: 'form-control' %>
+  </div>
+  
+  <!-- Password input field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= password_field_tag :password, nil, required: true, placeholder: 'Password', class: 'form-control' %>
+  </div>
+  
+  <!-- Submit button for logging in -->
+  <div>
+    <%= submit_tag 'Login', class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,56 @@
+# Let's assume we're filtering quotes by a specific user ID, just like in the recipeBox example.
+user_id = 5
+
+# We retrieve all quotes for the given user ID, including associated authors, categories, and users.
+quotes = Quote.where(user_id: user_id).includes(:author, :categories, :user)
+
+# Loop through each quote to display its information.
+quotes.each do |quote|
+  puts "QUOTE DESCRIPTION:"
+  # Display the actual text of the quote.
+  puts "#{quote.quoteDescription}"
+  
+  puts "AUTHOR:"
+  # Show the author's full name.
+  puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+  
+  # Display the author's birth year, if available.
+  puts "BORN: #{quote.author.birthYear}"
+  
+  # Display the author's death year, only if applicable.
+  puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+  
+  # Display a brief biography of the author if provided.
+  puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+  
+  puts "POSTED BY USER:"
+  # Show the first name of the user who posted the quote.
+  puts "#{quote.user.userFirstName}"
+  
+  puts "CATEGORIES:"
+  # Initialize a counter to list the categories.
+  cnt = 1
+  # Loop through and display each category the quote belongs to.
+  quote.categories.each do |category|
+    puts "#{cnt}. #{category.categoryName}"  # Display the category name.
+    cnt += 1  # Increment the counter for the next category.
+  end
+  
+  # Reset the counter for future use (if needed).
+  cnt = 1
+  
+  # If a publication year exists for the quote, display it.
+  if quote.publicationYear
+    puts "PUBLICATION YEAR:"
+    puts "#{quote.publicationYear}"
+  end
+  
+  # If the user has added a comment about the quote, display it.
+  if quote.comment
+    puts "COMMENT:"
+    puts "#{quote.comment}"
+  end
+  
+  # Print a separator to mark the end of the current quote and prepare for the next one.
+  puts "<next quote>"
+end

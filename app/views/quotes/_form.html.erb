@@ -1,0 +1,122 @@
+<!-- app/views/quotes/_form.html.erb -->
+<!-- 
+  This partial renders a form for creating or editing a Quote. 
+  It includes fields for the quote's content, author details, and associated categories.
+-->
+
+<%= form_with(model: @quote, local: true) do |f| %>
+  <!-- Display error messages if they exist -->
+  <% if @quote.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>
+        <%= pluralize(@quote.errors.count, "error") %> prohibited this quote from being saved:
+      </h4>
+      <ul>
+        <% @quote.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li> <!-- Display each validation error message -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Hidden field to store the user ID -->
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <!-- Quote Text Field -->
+  <div class="form-group mb-3">
+    <%= f.label :quoteDescription, "Quote Text", class: 'form-label' %>
+    <%= f.text_area :quoteDescription, class: 'form-control', placeholder: 'Enter the quote text', required: true %>
+  </div>
+
+  <!-- Comment Field (Optional) -->
+  <div class="form-group mb-3">
+    <%= f.label :comment, "Comment (Optional)", class: 'form-label' %>
+    <%= f.text_area :comment, class: 'form-control', placeholder: 'Add a comment if necessary' %>
+  </div>
+
+  <!-- Publication Year Field -->
+  <div class="form-group mb-3">
+    <%= f.label :publicationYear, "Publication Year (if known)", class: 'form-label' %>
+    <%= f.text_field :publicationYear, class: 'form-control', placeholder: 'Enter the year of publication' %>
+  </div>
+
+  <!-- Checkbox for Private Quote -->
+  <div class="form-group mb-3">
+    <%= f.check_box :isPrivate, class: 'form-check-input' %>
+    <%= f.label :isPrivate, "Make this quote private", class: 'form-check-label' %>
+  </div>
+
+  <!-- Author (Philosopher) Details -->
+  <h5 class="mt-4">Philosopher (Source) Details</h5>
+  <%= f.fields_for :author do |author_fields| %>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= author_fields.label :authorFirstName, "Author's First Name", class: 'form-label' %>
+        <%= author_fields.text_field :authorFirstName, class: 'form-control', placeholder: "Enter author's first name", required: true %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= author_fields.label :authorSurname, "Author's Last Name", class: 'form-label' %>
+        <%= author_fields.text_field :authorSurname, class: 'form-control', placeholder: "Enter author's last name" %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= author_fields.label :birthYear, "Author's Birth Year", class: 'form-label' %>
+        <%= author_fields.text_field :birthYear, class: 'form-control', placeholder: "Enter author's birth year" %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= author_fields.label :deathYear, "Author's Death Year (if applicable)", class: 'form-label' %>
+        <%= author_fields.text_field :deathYear, class: 'form-control', placeholder: "Enter author's death year (if applicable)" %>
+      </div>
+
+      <div class="col-12 mb-3">
+        <%= author_fields.label :authorDescription, "Short Biography (optional)", class: 'form-label' %>
+        <%= author_fields.text_area :authorDescription, class: 'form-control', placeholder: "Enter a short biography" %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Categories Section -->
+  <h5 class="mt-4">Categories</h5>
+  <div id="categories-container">
+    <% @quote.quote_categories.each do |quote_category| %>
+      <%= f.fields_for :quote_categories, quote_category do |qc| %>
+        <div class="category-field row mb-2">
+          <div class="col-md-8">
+            <%= qc.label :category_id, "Category", class: 'form-label' %>
+            <%= qc.select :category_id, 
+                          Category.all.collect { |cat| [cat.categoryName, cat.id] }, 
+                          {}, 
+                          class: 'form-control', required: true %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Button to add extra categories if needed -->
+  <div class="form-group mb-3">
+    <%= link_to 'Add Category', '#', class: 'btn btn-secondary', id: 'add-category' %>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-3">
+    <%= f.submit 'Save Quote', class: 'btn btn-primary btn-lg' %>
+  </div>
+<% end %>
+
+<!-- JavaScript to dynamically add more categories -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const addCategoryButton = document.getElementById('add-category');
+    const categoriesContainer = document.getElementById('categories-container');
+
+    addCategoryButton.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent the default link behavior
+      const newCategoryField = categoriesContainer.querySelector('.category-field').cloneNode(true);
+      newCategoryField.querySelector('select').value = ''; // Reset the select value
+      categoriesContainer.appendChild(newCategoryField); // Add the new category field
+    });
+  });
+</script>

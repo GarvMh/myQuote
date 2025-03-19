@@ -1,0 +1,17 @@
+<!-- app/views/authors/new.html.erb -->
+<!-- 
+  This view provides a form for creating a new author. 
+  It reuses the shared '_form' partial to ensure consistency with the edit view.
+-->
+
+<h1>New author</h1> <!-- Page heading -->
+
+<!-- Render the reusable form partial, passing a new author instance -->
+<%= render "form", author: @author %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation link to return to the list of authors -->
+<div>
+  <%= link_to "Back to authors", authors_path %>
+</div>

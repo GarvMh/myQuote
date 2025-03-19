@@ -1,0 +1,90 @@
+# This code searches for quotes that contain a specific term in their description. 
+# It retrieves associated authors, categories, and users for the quotes and outputs them. 
+# Additionally, it handles the case where no quotes are found, displaying a relevant message.
+
+# We're searching for quotes with a specific term in the description.
+search_term = "imagination"
+
+# Retrieve all quotes where the description contains the search term, along with associated authors, categories, and users.
+quotes_with_term = Quote.includes(:author, :categories, :user).where("quoteDescription LIKE ?", "%#{search_term}%")
+
+# Count how many quotes match the search term.
+quotes_with_term_count = quotes_with_term.count
+
+# Check if any quotes were found, if not display a message stating no records were found.
+if quotes_with_term_count == 0
+  puts "No quotes were found containing the term '#{search_term}'."
+elsif quotes_with_term_count > 1
+  # If multiple quotes were found, loop through and display each one.
+  quotes_with_term.each do |quote|
+    puts "QUOTE DESCRIPTION:"
+    puts "#{quote.quoteDescription}"
+    
+    puts "AUTHOR:"
+    puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+    
+    puts "BORN: #{quote.author.birthYear}" if quote.author.birthYear
+    puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+    puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+
+    puts "POSTED BY USER:"
+    puts "#{quote.user.userFirstName}"
+
+    puts "CATEGORIES:"
+    cnt = 1
+    quote.categories.each do |category|
+      puts "#{cnt}. #{category.categoryName}"
+      cnt += 1
+    end
+    cnt = 1
+
+    if quote.publicationYear
+      puts "PUBLICATION YEAR:"
+      puts "#{quote.publicationYear}"
+    end
+
+    if quote.comment
+      puts "COMMENT:"
+      puts "#{quote.comment}"
+    end
+
+    puts "<next quote>"
+  end
+else
+  # If only one quote is found, display its information directly.
+  quote = quotes_with_term.first
+
+  puts "QUOTE DESCRIPTION:"
+  puts "#{quote.quoteDescription}"
+  
+  puts "AUTHOR:"
+  puts "#{quote.author.authorFirstName} #{quote.author.authorSurname}"
+
+  puts "BORN: #{quote.author.birthYear}" if quote.author.birthYear
+  puts "DIED: #{quote.author.deathYear}" if quote.author.deathYear
+  puts "BIOGRAPHY: #{quote.author.authorDescription}" if quote.author.authorDescription
+
+  puts "POSTED BY USER:"
+  puts "#{quote.user.userFirstName}"
+
+  puts "CATEGORIES:"
+  cnt = 1
+  quote.categories.each do |category|
+    puts "#{cnt}. #{category.categoryName}"
+    cnt += 1
+  end
+  cnt = 1
+
+  if quote.publicationYear
+    puts "PUBLICATION YEAR:"
+    puts "#{quote.publicationYear}"
+  end
+
+  if quote.comment
+    puts "COMMENT:"
+    puts "#{quote.comment}"
+  end
+end
+
+# Suppress result output
+nil

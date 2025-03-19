@@ -1,0 +1,27 @@
+<!-- app/views/quotes/index.html.erb -->
+<!-- 
+  This view displays a list of all quotes in the application. 
+  It renders each quote using the shared partial and provides navigation 
+  links for viewing individual quotes and creating new ones.
+-->
+
+<!-- Display a notice message, if any, in green -->
+<p style="color: green"><%= notice %></p>
+
+<h1>Quotes</h1> <!-- Page heading -->
+
+<!-- Container for the list of quotes -->
+<div id="quotes">
+  <% @quotes.each do |quote| %>
+    <!-- Render the '_quote' partial for each quote in the collection -->
+    <%= render quote %>
+    
+    <!-- Link to view the individual quote details -->
+    <p>
+      <%= link_to "Show this quote", quote %>
+    </p>
+  <% end %>
+</div>
+
+<!-- Link to create a new quote -->
+<%= link_to "New quote", new_quote_path %>

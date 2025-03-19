@@ -1,0 +1,40 @@
+<!-- app/views/authors/_author.html.erb -->
+<!-- 
+  This partial renders the details of an individual author. 
+  It can be reused in multiple views to display author information consistently.
+-->
+
+<!-- Wrapper div with a dynamic ID based on the author's ID -->
+<div id="<%= dom_id author %>">
+  
+  <!-- Display the author's first name -->
+  <p>
+    <strong>Authorfirstname:</strong>
+    <%= author.authorFirstName %>
+  </p>
+
+  <!-- Display the author's surname -->
+  <p>
+    <strong>Authorsurname:</strong>
+    <%= author.authorSurname %>
+  </p>
+
+  <!-- Display a short biography or description of the author -->
+  <p>
+    <strong>Authordescription:</strong>
+    <%= author.authorDescription %>
+  </p>
+
+  <!-- Display the author's birth year -->
+  <p>
+    <strong>Birthyear:</strong>
+    <%= author.birthYear %>
+  </p>
+
+  <!-- Display the author's death year (if applicable) -->
+  <p>
+    <strong>Deathyear:</strong>
+    <%= author.deathYear %>
+  </p>
+
+</div>

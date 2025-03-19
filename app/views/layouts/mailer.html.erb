@@ -1,0 +1,26 @@
+<!-- 
+  This layout is used for rendering emails sent by the application.
+  It provides a basic HTML structure for emails, ensuring compatibility across email clients.
+  Styles should be applied inline for consistent rendering.
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Specify the character encoding for the email -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style>
+      /* 
+        Inline styles for email rendering.
+        Styles should be written here or directly within elements since many email clients 
+        do not support external or embedded stylesheets.
+      */
+    </style>
+  </head>
+
+  <body>
+    <!-- Yield to render the specific email content -->
+    <%= yield %>
+  </body>
+</html>

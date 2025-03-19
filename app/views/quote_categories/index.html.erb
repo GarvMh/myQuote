@@ -1,0 +1,27 @@
+
+<!-- 
+  This view displays a list of all QuoteCategory associations. 
+  It renders each QuoteCategory using the shared partial and provides navigation 
+  links for viewing individual associations and creating new ones.
+-->
+
+<!-- Display a notice message, if any, in green -->
+<p style="color: green"><%= notice %></p>
+
+<h1>Quote categories</h1> <!-- Page heading -->
+
+<!-- Container for the list of QuoteCategory associations -->
+<div id="quote_categories">
+  <% @quote_categories.each do |quote_category| %>
+    <!-- Render the '_quote_category' partial for each quote category -->
+    <%= render quote_category %>
+
+    <!-- Link to view the individual QuoteCategory details -->
+    <p>
+      <%= link_to "Show this quote category", quote_category %>
+    </p>
+  <% end %>
+</div>
+
+<!-- Link to create a new QuoteCategory -->
+<%= link_to "New quote category", new_quote_category_path %>

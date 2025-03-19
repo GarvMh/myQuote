@@ -1,0 +1,41 @@
+<!-- app/views/users/index.html.erb -->
+<!-- 
+  This view displays a list of all users in the application. 
+  It provides details for each user and allows administrators to edit or delete users.
+-->
+
+<!-- Display any notice messages in green -->
+<p style="color: green"><%= notice %></p>
+
+<h3>Manage Users</h3> <!-- Page heading for managing users -->
+
+<div id="users">
+  <% @users.each do |user| %>
+    <div class="user card mb-4"> <!-- Card layout for each user -->
+      <div class="card-body">
+        <!-- Display user's first name -->
+        <p class="card-text"><span style="font-weight: 600;">First Name:</span> <%= user.userFirstName %></p>
+        
+        <!-- Display user's last name -->
+        <p class="card-text"><span style="font-weight: 600;">Last Name:</span> <%= user.userSurname %></p>
+        
+        <!-- Display user's email address -->
+        <p class="card-text"><span style="font-weight: 600;">Email:</span> <%= user.emailAddress %></p>
+        
+        <!-- Display user's account status -->
+        <p class="card-text"><span style="font-weight: 600;">Status:</span> <%= user.accountStatus %></p>
+        
+        <!-- Link to edit the user (visible to all users) -->
+        <%= link_to 'Edit User', edit_user_path(user), class: 'btn btn-secondary' %>
+        
+        <!-- Link to delete the user (visible only to admins) -->
+        <% if current_user.isAdmin? %>
+          <%= link_to 'Delete User', user, method: :delete, data: { confirm: 'Are you sure you want to delete this user?' }, class: 'btn btn-danger' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Link to create a new user -->
+<%= link_to "New user", new_user_path %>

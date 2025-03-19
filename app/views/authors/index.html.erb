@@ -1,0 +1,27 @@
+<!-- app/views/authors/index.html.erb -->
+<!-- 
+  This view displays a list of all authors. 
+  It iterates over the authors and renders each author's details using the shared '_author' partial.
+  Provides links to view individual authors and create new ones.
+-->
+
+<!-- Display a notice message, if any, in green -->
+<p style="color: green"><%= notice %></p>
+
+<h1>Authors</h1> <!-- Page heading -->
+
+<!-- Container for the list of authors -->
+<div id="authors">
+  <% @authors.each do |author| %>
+    <!-- Render the '_author' partial for each author in the collection -->
+    <%= render author %>
+
+    <!-- Link to view the individual author's details -->
+    <p>
+      <%= link_to "Show this author", author %>
+    </p>
+  <% end %>
+</div>
+
+<!-- Link to navigate to the new author form -->
+<%= link_to "New author", new_author_path %>

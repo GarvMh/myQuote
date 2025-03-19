@@ -1,0 +1,21 @@
+<!-- app/views/quote_categories/show.html.erb -->
+<!-- 
+  This view displays the details of a specific QuoteCategory association.
+  It renders the associated quote category information and provides 
+  links for editing, returning to the list, and deleting the category.
+-->
+
+<!-- Display a notice message, if any, in green -->
+<p style="color: green"><%= notice %></p>
+
+<!-- Render the details of the specific QuoteCategory using the shared partial -->
+<%= render @quote_category %>
+
+<!-- Action links: Edit, Back to List, and Delete QuoteCategory -->
+<div>
+  <%= link_to "Edit this quote category", edit_quote_category_path(@quote_category) %> | <!-- Link to edit the current quote category -->
+  <%= link_to "Back to quote categories", quote_categories_path %> <!-- Link to return to the list of quote categories -->
+
+  <!-- Button to delete the quote category, using the DELETE HTTP method -->
+  <%= button_to "Destroy this quote category", @quote_category, method: :delete %>
+</div>

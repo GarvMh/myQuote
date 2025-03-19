@@ -1,0 +1,72 @@
+<!-- app/views/users/_form.html.erb -->
+<!-- 
+  This partial renders a form for creating or editing a user. 
+  It includes fields for user details and conditionally displays admin-specific fields 
+  if the current user has admin privileges.
+-->
+
+<%= form_with(model: user, local: true) do |f| %>
+  <!-- Display error messages if any exist -->
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>
+        <%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
+      </h4>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li> <!-- Display each validation error message -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- First Name Field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.label :userFirstName, "First Name" %> <!-- Label for first name -->
+    <%= f.text_field :userFirstName, class: 'form-control', required: true %> <!-- Input for first name -->
+  </div>
+
+  <!-- Last Name Field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.label :userSurname, "Last Name" %> <!-- Label for last name -->
+    <%= f.text_field :userSurname, class: 'form-control', required: true %> <!-- Input for last name -->
+  </div>
+
+  <!-- Email Address Field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.label :emailAddress, "Email Address" %> <!-- Label for email address -->
+    <%= f.text_field :emailAddress, class: 'form-control', required: true %> <!-- Input for email address -->
+  </div>
+
+  <!-- Admin-specific fields: Account Status and Admin Role -->
+  <% if current_user && current_user.isAdmin? %>
+    <div class="form-group">
+      <%= f.label :accountStatus %> <!-- Label for account status -->
+      <%= f.select :accountStatus, ['Active', 'Suspended', 'Banned'], {}, class: 'form-control' %> <!-- Dropdown for account status -->
+    </div>
+
+    <div class="form-group">
+      <%= f.label :isAdmin do %> <!-- Label for admin role checkbox -->
+        Admin Role
+        <%= f.check_box :isAdmin %> <!-- Checkbox for admin role -->
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Password Field for New or Existing User -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.label :password, "New Password" %> <!-- Label for new password -->
+    <%= f.password_field :password, class: 'form-control', placeholder: 'Leave blank if you do not want to change' %> <!-- Input for new password -->
+  </div>
+
+  <!-- Password Confirmation Field -->
+  <div class="form-group" style="padding-bottom: 10px;">
+    <%= f.label :password_confirmation, "Confirm New Password" %> <!-- Label for password confirmation -->
+    <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Leave blank if you do not want to change' %> <!-- Input for password confirmation -->
+  </div>
+
+  <!-- Submit Button -->
+  <div>
+    <%= f.submit 'Update User', class: 'btn btn-primary' %> <!-- Button to submit the form -->
+  </div>
+<% end %>

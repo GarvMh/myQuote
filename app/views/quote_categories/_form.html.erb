@@ -1,0 +1,42 @@
+<!-- app/views/quote_categories/_form.html.erb -->
+<!-- 
+  This partial renders a form for creating or editing a QuoteCategory association. 
+  It ensures that both the quote and category IDs are provided, linking a quote with a category.
+-->
+
+<%= form_with(model: quote_category) do |form| %>
+
+  <!-- Display validation errors, if any exist -->
+  <% if quote_category.errors.any? %>
+    <div style="color: red">
+      <h2>
+        <%= pluralize(quote_category.errors.count, "error") %> 
+        prohibited this quote_category from being saved:
+      </h2>
+
+      <ul>
+        <% quote_category.errors.each do |error| %>
+          <li><%= error.full_message %></li> <!-- Display each validation error message -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Input field for the quote ID -->
+  <div>
+    <%= form.label :quote_id, style: "display: block" %>
+    <%= form.text_field :quote_id %>
+  </div>
+
+  <!-- Input field for the category ID -->
+  <div>
+    <%= form.label :category_id, style: "display: block" %>
+    <%= form.text_field :category_id %>
+  </div>
+
+  <!-- Submit button to save the QuoteCategory association -->
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

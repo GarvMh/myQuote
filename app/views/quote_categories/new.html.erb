@@ -1,0 +1,17 @@
+<!-- app/views/quote_categories/new.html.erb -->
+<!-- 
+  This view provides a form for creating a new QuoteCategory association. 
+  It reuses the shared '_form' partial to maintain consistency across the application.
+-->
+
+<h1>New quote category</h1> <!-- Page heading -->
+
+<!-- Render the reusable form partial, passing a new QuoteCategory instance -->
+<%= render "form", quote_category: @quote_category %>
+
+<br> <!-- Spacer for better layout -->
+
+<!-- Navigation link to return to the list of QuoteCategories -->
+<div>
+  <%= link_to "Back to quote categories", quote_categories_path %>
+</div>
